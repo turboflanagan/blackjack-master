@@ -7,7 +7,7 @@ var dealerHand;
 
 
 function shuffleDeck(){
-	var deck =[];
+	var deck = [];
 	//fill our deck, in order (for now)
 	//suit 
 	var suit = "";
@@ -22,11 +22,31 @@ function shuffleDeck(){
 			suit = "c";
 		}
 		//card number
-		for(i = 1; i <= 13; i++){
+		for(i = 1; i <= 13; i++){   //took royalties out of the iteration to
+									//deal with their name/value seperately.
 			deck.push(i+suit);
 		}
 	}
 	console.log(deck);
+
+
+
+// ----------------------------------------------------------------------------
+// 	for(i = 1; i <= 13; i++){   //took royalties out of the iteration to
+// 			if(i <= 10){						//deal with their name/value seperately.
+// 			deck.push(i+suit);
+// 			}else if(i = 11){
+// 				deck.push("J "+suit);
+// 			}else if(i = 12){
+// 				deck.push("Q "+suit);
+// 			}else if(i = 13){
+// 				deck.push("K "+suit);
+// 			}
+// 	}
+// ----------------------------------------------------------------------------
+
+
+
 
 	var numberOfTimesToShuffle = Math.floor( Math.random() * 500 + 500);
 	var numberOfTimesToShuffle = 2000;
@@ -52,20 +72,30 @@ function shuffleDeck(){
 }
 
 function placeCard(card, who, slot){
-	var currId = who + '-card-' + slot;
-	document.getElementById(currId).className = "card";
-	document.getElementById(currId).innerHTML = card;
+	var currId = '#' + who + '-card-' + slot;
+	$('#' + currId).removeClass("empty");
+	$(currId).html(card);
+	//above line of jQuery replaced line below
+	//document.getElementById(currId).className = "card";
+	$('#' + currId).id = card;
+	//above line of jQuery replaced line below
+	//document.getElementById(currId).innerHTML = card;
 
 }
 
 function bust(who){
 	if(who === "player"){
 		//player lost!!! Dealer won!!!
-		document.getElementById('message').innerHTML = "You have busted! Better luck next time!"
+		$('#message').html("You have busted! Better luck next time!")
 	}else{
-		document.getElementById('message').innerHTML = "The dealer has busted! You won!"
+		$('#message').html("The dealer has busted! You won!")
 	}
-}
+	//above lines replace lines below.
+// 		document.getElementById('message').innerHTML = "You have busted! Better luck next time!"
+// 	}else{
+// 		document.getElementById('message').innerHTML = "The dealer has busted! You won!"
+// 	}
+// }
 
 function calculateTotal(hand, who){
 	var total = 0;
@@ -75,7 +105,9 @@ function calculateTotal(hand, who){
 		// total += cardValue;
 	}
 	var idWhoToGet = who + '-total';
-	document.getElementById(idWhoToGet).innerHTML = total;
+	$('#' + 'idWhoToGet').html(total);
+
+	//document.getElementById(idWhoToGet).innerHTML = total;
 
 	//check for bust
 	if(total > 21){
@@ -119,10 +151,34 @@ function hit(){
 
 function checkWin(){
 
+    //Get player total
+    // get dealer total
+    //who is higher but less than 21
+    //set up a message
 }
-
+// ------------------------------------------------------------------
 function reset(){
-	
+    //empty the deck
+    deck = [];
+    //reset the place in the deck
+    placeInDeck = 0;
+    //reset the players total cards
+    playerTotalCards = 2;
+    //reset the dealers total cards
+    dealerTotalCards = 2;
+    //reset the players hand array
+    playerHand = [];
+    //reset the dealers hand array
+    dealerHand = [];
+    //reset the message
+    $('#message').html("");
+    //document.getElementById("message").innerHTML="";
+    //reset all the cards (divs and the empty class)
+    var cards = document.getElementsByClassName("card");
+    for(i = 0; i < cards.length; i++){
+    	cards[i].className = cards[i].className + " empty";
+    	cards[i].innerHTML = "";
+    }
 }
 
 function stand(){
@@ -151,6 +207,42 @@ function setName(){
 }
 
 var name = setName();
+
+
+
+// complete checkWin.
+// compare dealer win with player win and if player win increment win counter.
+
+// Homework Ideas: 
+// 1.    Fix 11-13 and 1
+// 2.    Create a delay on the draw
+// 3.    Change it from wins to $wager amount
+// 4.    Add a wager dialogue (prompt or form)
+// 5.    Color code the card based on suit
+// 7.    Add 1 or 11 logic to player
+// 8.  Add 1 or 11 logic to dealer
+// 9.    Add multiple players 
+
+
+
+
+// var cards = document.getElementsByClassName("card");
+// //both above and below lines do the same thing.
+// var cards = $(.card).html("card");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
